@@ -17,6 +17,10 @@ import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
 
+    companion object {
+        val TAG = "RegisterActivity"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -28,7 +32,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         already_have_account_textView.setOnClickListener {
-            Log.d("RegisterActivity", "show log in activity")
+            Log.d(TAG, "show log in activity")
 
             //launch the login activity
             val intent = Intent(this, LoginActivity::class.java)
@@ -36,7 +40,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         select_photo_button.setOnClickListener {
-            Log.d("RegisterActivity", "Show photo selector")
+            Log.d(TAG, "Show photo selector")
 
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
@@ -53,7 +57,7 @@ class RegisterActivity : AppCompatActivity() {
         if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
             // proceed and check what the selected picture was
 
-            Log.d("RegisterActivity", "Photo was selected")
+            Log.d(TAG, "Photo was selected")
 
             selectPhotoUri = data.data
 
@@ -77,8 +81,8 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        Log.d("RegisterActivity", "Email is " + email)
-        Log.d("RegisterActivity", "Password: $password")
+        Log.d(TAG, "Email is " + email)
+        Log.d(TAG, "Password: $password")
 
         //Firebase authentication to create user with email and password
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
@@ -86,13 +90,13 @@ class RegisterActivity : AppCompatActivity() {
                     if (!it.isSuccessful) return@addOnCompleteListener
 
                     //else if successful
-                    Log.d("RegisterActivity", "Successfully created user with uid: ${it.result.user.uid}")
+                    Log.d(TAG, "Successfully created user with uid: ${it.result.user.uid}")
 
 
                     uploadImageToFirebase()
                 }
                 .addOnFailureListener {
-                    Log.d("RegisterActivity", "Failed to create user: ${it.message}")
+                    Log.d(TAG, "Failed to create user: ${it.message}")
                     Toast.makeText(this, "Failed to create user: ${it.message}", Toast.LENGTH_SHORT).show()
 
                 }
@@ -107,10 +111,10 @@ class RegisterActivity : AppCompatActivity() {
 
         ref.putFile(selectPhotoUri!!)
                 .addOnSuccessListener {
-                    Log.d("RegisterActivity", "Successfully uploaded image: ${it.metadata?.path}")
+                    Log.d(TAG, "Successfully uploaded image: ${it.metadata?.path}")
 
                     ref.downloadUrl.addOnSuccessListener {
-                        Log.d("RegisterActivity","File location: $it")
+                        Log.d(TAG,"File location: $it")
 
                         saveUserToFirebaseDatabase(it.toString())
                     }
@@ -130,12 +134,20 @@ class RegisterActivity : AppCompatActivity() {
 
         ref.setValue(user)
                 .addOnSuccessListener {
-                    Log.d("RegisterActivity","User saved to database")
+                    Log.d(TAG,"User saved to database")
+
+                    val intent = Intent(this, LatestMessagesActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
                 }
     }
 }
 
-class User (val uid: String, val username: String, val profileImageUrl: String)
+class User (val uid: String, val username: String, val profileImageUrl: String){
+    constructor(): this ("","","")
+
+}
+
 
 
 
