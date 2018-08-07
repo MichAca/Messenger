@@ -9,6 +9,7 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_chat_log.*
 import kotlinx.android.synthetic.main.activity_new_message.*
+import kotlinx.android.synthetic.main.user_row_new_message.view.*
 
 class ChatLogActivity : AppCompatActivity() {
 
@@ -42,7 +43,7 @@ class ChatLogActivity : AppCompatActivity() {
     }
 }
 
-class ChatFromItem: Item<ViewHolder>(){
+class ChatFromItem : Item<ViewHolder>() {
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
 
@@ -55,7 +56,7 @@ class ChatFromItem: Item<ViewHolder>(){
 
 }
 
-class ChatToItem: Item<ViewHolder>(){
+class ChatToItem : Item<ViewHolder>() {
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
 

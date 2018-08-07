@@ -47,13 +47,13 @@ class NewMessageActivity : AppCompatActivity() {
                     }
                 }
 
-                adapter.setOnItemClickListener{ item, view ->
+                adapter.setOnItemClickListener { item, view ->
 
                     val userItem = item as UserItem
 
                     val intent = Intent(view.context, ChatLogActivity::class.java)
-                   // intent.putExtra(USER_KEY, userItem.user.username)
-                    intent.putExtra(USER_KEY, userItem.user)
+                     intent.putExtra(USER_KEY, userItem.user.username)
+                     intent.putExtra(USER_KEY, userItem.user)
                     startActivity(intent)
 
                     finish()
@@ -70,8 +70,6 @@ class NewMessageActivity : AppCompatActivity() {
 
     }
 }
-
-
 
 class UserItem(val user: User) : Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
