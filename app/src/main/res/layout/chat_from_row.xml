@@ -8,15 +8,15 @@
     android:layout_marginBottom="12dp">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView_from_chat_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:text="This is a message with long and multiple lines that keep going like crazy. Yeah "
         android:background="@drawable/rounded_edittext"
-        android:padding="16dp"
         android:maxWidth="240dp"
+        android:padding="16dp"
+        android:text="This is a message with long and multiple lines that keep going like crazy. Yeah "
         app:layout_constraintStart_toEndOf="@+id/imageButton"
         app:layout_constraintTop_toTopOf="@+id/imageButton" />
 
